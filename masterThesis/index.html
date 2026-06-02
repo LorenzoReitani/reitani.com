@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPDG96EVE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-JGPDG96EVE');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calibration and Uncertainty Visualisation in Medical Image Segmentation | Lorenzo Reitani</title>
+  <meta name="description" content="Master's thesis by Lorenzo Reitani on calibration and uncertainty visualisation in medical image segmentation." />
+  <meta name="author" content="Lorenzo Reitani" />
+  <link rel="canonical" href="https://reitani.com/masterThesis/" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #111827;
+      --accent-hover: #374151;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top left, #eef2ff 0, transparent 32%), var(--bg);
+      color: var(--text);
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 64px 22px;
+    }
+    .card {
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: clamp(28px, 5vw, 54px);
+      box-shadow: 0 20px 50px rgba(17,24,39,.07);
+    }
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: .95rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+    }
+    .meta {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 34px 0 0;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--accent);
+    }
+    .button:hover { background: var(--accent-hover); }
+    .button.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+    .button.secondary:hover { background: #f3f4f6; }
+    section { margin-top: 42px; }
+    h2 {
+      font-size: 1.35rem;
+      margin: 0 0 14px;
+      letter-spacing: -.02em;
+    }
+    p {
+      color: #374151;
+      font-size: 1.03rem;
+      line-height: 1.75;
+      margin: 0 0 16px;
+    }
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #374151;
+      background: #f9fafb;
+      font-size: .92rem;
+    }
+    .citation {
+      border-left: 4px solid var(--line);
+      padding-left: 16px;
+      color: #374151;
+    }
+    footer {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <article class="card">
+      <p class="eyebrow">Master’s Thesis</p>
+      <h1>Calibration and Uncertainty Visualisation in Medical Image Segmentation</h1>
+
+      <p class="meta">
+        <strong>Author:</strong> Lorenzo Reitani<br />
+        <strong>Degree programme:</strong> MSc in Computer Science and Engineering        <strong>University:</strong> Politecnico di Milano<br />
+        <strong>Advisor:</strong> Prof. Loiacono Daniele<br />
+        <strong>Co-advisor:</strong> Brioso Ricardo<br />
+        <strong>Academic Year:</strong> 2025-2026
+      </p>
+
+      <div class="actions">
+        <a class="button" href="ReitaniMasterThesis.pdf" download
+          onclick="if(window.gtag){gtag('event','download_thesis',{event_category:'Thesis',event_label:'ReitaniMasterThesis.pdf',transport_type:'beacon'});}">
+          Download full thesis (PDF)
+        </a>
+      
+        <a class="button secondary" href="ReitaniMasterThesis.pdf" target="_blank" rel="noopener"
+          onclick="if(window.gtag){gtag('event','open_thesis_pdf',{event_category:'Thesis',event_label:'ReitaniMasterThesis.pdf',transport_type:'beacon'});}">
+          Open PDF in browser
+        </a>
+      </div>
+
+      <section>
+        <h2>Abstract</h2>
+        <p>
+          Deep learning models for medical image segmentation must provide not only accurate predictions but also calibrated confidence and clinically meaningful uncertainty estimates. In full-body CT segmentation of small and low-contrast structures such as the lymphatic system, predictive probabilities are often miscalibrated and voxel-wise uncertainty maps are dominated by trivial boundary effects.
+        </p>
+        <p>
+          This thesis investigates calibration and uncertainty estimation within the nnU-Net v2 framework on 45 annotated CT volumes. Three configurations are compared: a single baseline model, a deep ensemble based on 5-fold cross-validation, and a checkpoint ensemble based on cyclical learning rates. Confidence calibration is performed via post-hoc temperature scaling, with the temperature parameter estimated by minimizing negative log-likelihood on a held-out region of interest.
+        </p>
+        <p>
+          On the test set, temperature scaling consistently reduces miscalibration across all models, with relative improvements up to 41% in NLL and 56% in Expected Calibration Error, without altering segmentation decisions. Voxel-wise uncertainty maps derived from single or ensemble predictions are quantitatively evaluated as error localization tools through threshold calibration based on Dice overlap with segmentation errors.
+        </p>
+        <p>
+          Within a 15 mm ROI, ensemble-based measures achieve the highest overall error recall, while distance-aware entropy and Exceedance-Based Contextual Uncertainty improve the detection of non-boundary uncertainty patterns. An interactive visualization tool integrates calibrated predictions and thresholded uncertainty maps to support structured qualitative inspection. Overall, the results show that post-hoc calibration improves the alignment between uncertainty and actual segmentation errors, and that voxel-wise uncertainty maps can support error detection and clinical interpretability without architectural modifications or substantial computational overhead.
+        </p>
+
+        <div class="keywords" aria-label="Keywords">
+          <span class="tag">uncertainty estimation</span>
+          <span class="tag">confidence calibration</span>
+          <span class="tag">medical image segmentation</span>
+          <span class="tag">nnU-Net</span>
+          <span class="tag">deep ensemble</span>
+          <span class="tag">temperature scaling</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          <a href="https://www.linkedin.com/in/lorenzo-reitani-10305923a/" target="_blank" rel="noopener noreferrer">LinkedIn — Lorenzo Reitani</a>
+        </p>
+      </section>
+
+      <footer>
+        © Lorenzo Reitani. This page provides public access to the thesis document.
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
